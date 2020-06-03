@@ -1,0 +1,131 @@
+#include <iostream>
+using namespace std;
+
+struct Node{
+    int data;
+    Node *pNext;
+};
+
+struct Singlelist{
+    Node *pHead;
+};
+
+void Initialize(Singlelist &list){
+    list.pHead=NULL;
+}
+
+Node *CreateNode(int value)
+{
+    Node *pNode = new Node;
+    if(pNode!=NULL){
+        pNode->data=value;
+        pNode->pNext=NULL;
+        }
+        else{ 
+            cout<<"Error Allocated Memory";}
+        return pNode;
+    
+}
+
+void Printlist(Singlelist list)
+{
+    Node *temp=list.pHead;
+    if(temp==NULL)
+    {
+        cout<<"Empty List";
+        return;
+    }
+    while(temp!=NULL){
+        cout<<temp->data<<" ";
+        temp=temp->pNext;
+    }
+    delete temp;
+}
+
+//delete *temp;
+
+int SizeofList(Singlelist list){
+    Node *temp=list.pHead;
+    int Size=0;
+    while(temp!=NULL){
+        temp=temp->pNext;
+        Size++;
+    }
+    delete temp;
+    return Size;
+    
+}
+
+void AddFirst(Singlelist &list, int value){
+    Node *pNode=CreateNode(value);
+    if(list.pHead==NULL){
+       list.pHead=pNode;
+    }
+    else{
+        pNode->pNext=list.pHead;
+        list.pHead=pNode;
+    }
+    delete pNode;
+}
+
+
+void AddLast(Singlelist &list, int value) 
+{
+    Node *pNode=CreateNode(value);
+    if(list.pHead==NULL)
+    {
+        list.pHead=pNode;
+    }
+    else{
+        Node *temp=list.pHead;
+        while(temp->pNext!=NULL)
+        {
+            temp=temp->pNext;
+        }
+        temp->pNext=pNode;
+    }
+    delete pNode;
+}
+
+void AddMiddle(Singlelist &list,int pos, int value){
+    if(pos<0 || pos>=SizeofList(list))
+    {
+        cout<<"vi tri can chen ko hop le";}
+    if(pos==0){
+        AddFirst(list,value);}
+    if(pos==SizeofList(list)-1){
+        AddLast(list,value);}
+    else{
+        Node *pNode=CreateNode(value);
+        Node *pIns=list.pHead;
+        Node *pPre=NULL;
+        int i=0;
+        while(pIns!=NULL){
+            if(i==pos) 
+            break;
+            pPre=pIns;
+            pIns=pIns->pNext;
+            i++;
+            }
+        pNode->pNext=pIns;
+        pPre->pNext=pNode;
+        }
+        
+}
+
+
+int main()
+{
+    Singlelist list;
+    Initialize(list);
+//    AddFirst(list,2);
+ //   AddFirst(list,4);
+//    AddFirst(list,6);
+//    AddLast(list,3);
+ //   AddLast(list,100);
+    AddMiddle(list,0,9);
+    Printlist(list);
+//    SizeofList(list);
+    return 0;
+
+}
